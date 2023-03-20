@@ -23,18 +23,19 @@ lazy_static! {
             symbol:"ඞ".to_owned(),
             mass: 0_f32,
             electron_configuration: "".to_owned()
-        });""")
+        });
+""")
 
         for key, value in data.items():
             # DO NOT TOUCH THE INDENTATION; YOU WILL BREAK EVERYTHING, YOU FOOL!!! 
             generated.write(f"""
-         tmp.insert({value['atomic_number']}, Element {{ 
-             number: {value['atomic_number']}, 
-             name: "{value['element_name']}".to_owned(), 
-             symbol: "{value['atomic_symbol']}".to_owned(),
-             mass: {value['atomic_mass']}_f32,
-             electron_configuration: "{value['electron_configuration']}".to_owned()
-         }});
+        tmp.insert({value['atomic_number']}, Element {{ 
+            number: {value['atomic_number']}, 
+            name: "{value['element_name']}".to_owned(), 
+            symbol: "{value['atomic_symbol']}".to_owned(),
+            mass: {value['atomic_mass']}_f32,
+            electron_configuration: "{value['electron_configuration']}".to_owned()
+        }});
 """)
 
         generated.write("""    tmp
