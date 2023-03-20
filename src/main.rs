@@ -2,6 +2,7 @@
 use std::process::exit;
 
 mod elements;
+use crate::elements::element::Element;
 use crate::elements::lookup;
 
 // https://stackoverflow.com/a/38406885
@@ -14,16 +15,38 @@ fn uppercase_first_letter(s: &str) -> String {
 }
 
 fn main() {
-    let input: Vec<_> = std::env::args().collect();
+    let input: Vec<_> = std::env::args().collect::<Vec<_>>()[1..].to_vec();
 
-    if input.len() < 2 {
+    let mut results: Vec<&Element> = vec![];
+
+    if input.len() < 1 {
         eprintln!("Please provide something to look up!");
         exit(1);
     }
 
-    let arg = &input[1];
-    match lookup(uppercase_first_letter(&arg.to_ascii_lowercase())) {
-        Ok(description) => println!("{}", description),
-        Err(error) => eprintln!("{}", error),
+    for arg in input {
+        match lookup(uppercase_first_letter(&arg.to_ascii_lowercase())) {
+            Ok(element) => results.push(element),
+            Err(error) => {
+                eprintln!("{}", error);
+                exit(1);
+            }
+        }
+    }
+
+    if results.len() == 1 {
+        println!("{}", results[0]);
+        return;
+    }
+
+    println!(
+        "| {: <6} | {: <15} | {: <6} | {: <10} | {: <33} |",
+        "Number", "Name", "Symbol", "Mass", "Electron Configuration"
+    );
+    for result in results {
+        println!(
+            "| {: <6} | {: <15} | {: <6} | {: <10} | {: <33} |",
+            result.number, result.name, result.symbol, result.mass, result.electron_configuration
+        );
     }
 }

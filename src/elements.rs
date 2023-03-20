@@ -2,7 +2,7 @@
 
 use lazy_static::lazy_static;
 
-mod element;
+pub mod element;
 use crate::elements::element::Element;
 
 lazy_static! {    
