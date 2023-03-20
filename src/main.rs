@@ -34,6 +34,11 @@ fn main() {
         }
     }
 
+    if results.len() == 1 {
+        println!("{}", results[0]);
+        return;
+    }
+
     println!(
         "| {: <6} | {: <15} | {: <6} | {: <10} | {: <33} |",
         "Number", "Name", "Symbol", "Mass", "Electron Configuration"
