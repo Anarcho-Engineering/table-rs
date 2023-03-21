@@ -2,8 +2,8 @@
 use std::process::exit;
 
 mod elements;
-use crate::elements::element::Element;
 use crate::elements::lookup;
+use crate::elements::Element;
 
 // https://stackoverflow.com/a/38406885
 fn uppercase_first_letter(s: &str) -> String {
@@ -19,7 +19,7 @@ fn main() {
 
     let mut results: Vec<&Element> = vec![];
 
-    if input.len() < 1 {
+    if input.is_empty() {
         eprintln!("Please provide something to look up!");
         exit(1);
     }
