@@ -33,6 +33,8 @@ if __name__ == "__main__":
     )
 
     with open("generated.rs", "w") as generated:
+        generated.write(f"build_elements! {{{len(data)} ELEMENTS;\n")
+        
         for i, (key, value) in enumerate(data.items()):
             mass = value["atomic_mass"]
 
@@ -54,4 +56,6 @@ if __name__ == "__main__":
                 f" \"{value['electron_configuration']}\"{',' if i < len(data) - 1 else ''}\n"
             )
 
+        generated.write("}")
+        
     print(f"Generated entries for {len(data)} elements!")

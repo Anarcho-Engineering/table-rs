@@ -10,8 +10,8 @@ pub struct Element {
 }
 
 macro_rules! build_elements {
-    ( $i:ident ; $( $sym:ident $num:literal : $name:ident $mass:literal $ec:literal ),* ) => {
-        pub static $i: [Element; 118] = [$( Element{ number: $num, name: stringify!($name), symbol: stringify!($sym), mass: $mass, electron_configuration: $ec } ),*];
+    ( $len:literal $i:ident ; $( $sym:ident $num:literal : $name:ident $mass:literal $ec:literal ),* ) => {
+        pub static $i: [Element; $len] = [$( Element{ number: $num, name: stringify!($name), symbol: stringify!($sym), mass: $mass, electron_configuration: $ec } ),*];
 
         pub fn lookup(property: String) -> Result<&'static Element, &'static str> {
             match property.as_str() {
@@ -34,7 +34,7 @@ impl Display for Element {
     }
 }
 
-build_elements! {ELEMENTS;
+build_elements! {118 ELEMENTS;
     H  1:   Hydrogen        1.00800000 "1s1",
     He 2:   Helium          4.00260000 "1s2",
     Li 3:   Lithium         7.00000000 "[He]2s1",
