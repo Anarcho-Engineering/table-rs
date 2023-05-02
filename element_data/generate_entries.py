@@ -6,23 +6,23 @@ codegen.py
 
 import json
 
-__author__ = """Pin Lee - (C) 2023"""
+__author__ = """R2Boyo25 (KazaniAvali) & Pin Lee - (C) 2023"""
 
 
 def field(a, key):
     "Get a field from every dict in a list"
-    
+
     return map(lambda x: x[1][key], a.items())
 
 
 def longest(a):
     "Get the length of the longest string"
-    
+
     return max(map(len, a))
 
 
 if __name__ == "__main__":
-    with open("./element_data/elements_by_number.json", "r") as f:
+    with open("./element_data/elements_by_number.json", "r", encoding='utf-8') as f:
         data = json.load(f)
 
     lname = longest(field(data, "element_name"))
@@ -32,9 +32,9 @@ if __name__ == "__main__":
         map(lambda x: x.split(".")[1] if "." in x else "", field(data, "atomic_mass"))
     )
 
-    with open("generated.rs", "w") as generated:
+    with open("generated.rs", "w", encoding='utf-8') as generated:
         generated.write(f"build_elements! {{{len(data)} ELEMENTS;\n")
-        
+
         for i, (key, value) in enumerate(data.items()):
             mass = value["atomic_mass"]
 
@@ -54,8 +54,10 @@ if __name__ == "__main__":
                 f" {value['element_name'].ljust(lname)}"
                 f" {padded_mass}"
                 f" \"{value['electron_configuration']}\"{',' if i < len(data) - 1 else ''}\n"
+                    .replace(" (calculated)", "")
+                    .replace(" (predicted)", "")
             )
 
         generated.write("}")
-        
+
     print(f"Generated entries for {len(data)} elements!")
